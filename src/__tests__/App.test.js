@@ -23,11 +23,11 @@ describe("App component", () => {
 
     apiMock.onGet("repositories").reply(200, []);
 
-    apiMock.onPost("repositories").reply(200, {
+    apiMock.onPost("repositories").reply(201, {
       id: "123",
       url: "https://github.com/josepholiveira",
       title: "Desafio ReactJS",
-      techs: ["React", "Node.js"],
+      techs: ["React", "Node.js"]
     });
 
     await actWait();
@@ -49,8 +49,8 @@ describe("App component", () => {
         id: "123",
         url: "https://github.com/josepholiveira",
         title: "Desafio ReactJS",
-        techs: ["React", "Node.js"],
-      },
+        techs: ["React", "Node.js"]
+      }
     ]);
 
     apiMock.onDelete("repositories/123").reply(204);
@@ -61,6 +61,8 @@ describe("App component", () => {
 
     await actWait();
 
-    expect(getByTestId("repository-list")).toBeEmpty();
+    expect(getByTestId("repository-list")).toContainElement(
+      getByText("Você ainda não tem repositórios")
+    );
   });
 });
